@@ -83,7 +83,8 @@ for folderVar in ${folderArr[@]}; do
 			mkdir $folderVar
 		fi
 		dest=$folderVar/$fileVar
-		link $fileVar $dest
+		rm -f $dest
+		link $fileVar $dest 
 	done
 done
 for fileVar in ${fileArr[@]}; do
@@ -99,7 +100,8 @@ for fileVar in ${fileArr[@]}; do
 	done
 	lenRem=`expr ${#fileVar} - $pointLoc`
 	if [ $flag -eq 1 ] || [ $pointLoc -eq -1 ] || [ $lenRem -le 1 ]; then
-		dest=Extensions/Other
+		dest=Extensions/Other/ + $fileVar
+		rm -f $dest
 		link $fileVar $dest
 	else
 		ext=${fileVar:pointLoc+1:lenRem-1}
@@ -107,6 +109,8 @@ for fileVar in ${fileArr[@]}; do
 		if [ ! -d $dest ]; then
 			mkdir $dest
 		fi
+		dest=$dest/$fileVar
+		rm -f $dest
 		link $fileVar $dest
 	fi
 done
